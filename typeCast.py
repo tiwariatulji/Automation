@@ -14,3 +14,6 @@ a = "31.2"
 b = float(a)
 c = type(b)
 print(c,b)
+
+n = 10 < 5 
+print(n)
