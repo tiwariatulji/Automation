@@ -17,4 +17,14 @@ print(marks.items())
 print(marks.keys())
 print(marks.values())
 
-print(marks.update({"maths":95}))
+print(marks.update({"maths":95 ,"Bhugol":86}))
+print(marks)
+
+print(marks.get("maths"))
+# print(marks.pop("maths")) 
+print(marks)
+
+# -------------
+
+print(marks["Harry"])# error
+print(marks.get("Harry")) # None
