@@ -97,5 +97,8 @@ if((sub1+sub2+sub3)/3<40):
 else:
   print("Congratulation you are pass")
 
+# # A spam comment is defined as a text containing following keywords:
+# “Make a lot of money”, “buy now”, “subscribe this”, “click this”. Write a program
+# to detect these spams.
 
     
