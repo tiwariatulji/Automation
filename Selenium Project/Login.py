@@ -17,7 +17,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 browser = webdriver.Chrome()
 
 browser.get('https://web.fiatcs.com/web/landing/login')
-assert 'fiatcs ' in browser.title
+assert 'fiatcs Tiwari' in browser.title
 
 elem = browser.find_element(By.NAME, 'p')  # Find the search box
 elem.send_keys('fiatcs' + Keys.RETURN)
