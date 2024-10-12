@@ -17,3 +17,15 @@
 # Parents to 3rd last child or grandchild    (//tagname[@attribute = ‘value’]//tagname)[last()-2]
 # Child to any ancestor                      //tagname[@attribute = ‘value’]/ancestor::tagname[@attribute = ‘value’]
 # Parent to first n number of child         (//tagname[@attribute = ‘value’]//tagname)[position() >,<,= number]
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+Options = Options()
+Options.add_experimental_option("detach", True)
+from selenium.webdriver.common.by import By
+driver = webdriver.Chrome(options=Options)
+driver.get("https://rahulshettyacademy.com/AutomationPractice/")
+
+driver.find_element(By.XPATH, "//*[@value='radio2' and @name='radioButton']").click()
+# web = driver.find_element(By.XPATH, "//legend[test() ='Suggession Class Example']").is_selected() # returns True/False
+# driver.find_element(By.CSS_SELECTOR,'//input[@value="radio2"]').click()
