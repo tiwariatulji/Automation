@@ -101,4 +101,23 @@ else:
 # “Make a lot of money”, “buy now”, “subscribe this”, “click this”. Write a program
 # to detect these spams.
 
-    
+    # -----------Write a program to find whether a given username contains less than 10 characters or not.---------
+
+username = input("Enter your username: ")
+if len(username)<10:
+        print("Username is too short")
+else:
+        print("Username is valid")
+
+# ---------- Write a program which finds out whether a given name is present in a list or not.---
+
+l= ["Atul", "Vipul ", "Singh"]
+
+number = input("Enter your name: ")
+
+if number in l:
+        print("Your name is present in the list")
+        # Output: Your name is present in the list
+else:
+        print("Your name is not present in the list")
+        # Output: Your name is not present in the list
