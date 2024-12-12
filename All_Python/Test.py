@@ -1,5 +1,14 @@
-var = "Helathians"
-print(var)
+# Initialize the numbers
+a = 5
+b = 10
 
-for i in range(0, 10):
-    print(i)
+# Swap using a third variable
+temp = a
+a = b
+b = temp
+
+# Display the results
+# print("After swapping:")
+print("a =", a)
+print("b =", b)
+
