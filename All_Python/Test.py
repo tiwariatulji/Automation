@@ -1,0 +1,2 @@
+var = "Helathians"
+print(var)
