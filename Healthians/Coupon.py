@@ -12,7 +12,7 @@ Username = driver.find_element(By.XPATH, "//input[@name='username']")
 Username.send_keys("atul.tiwari@healthians.com")
 driver.implicitly_wait(10)
 password  = driver.find_element(By.XPATH, "//input[@name='password']")
-password.send_keys("Atul@123")
+password.send_keys("Atul@1234")
 driver.implicitly_wait(100)
 
 
@@ -59,10 +59,10 @@ driver.implicitly_wait(1000)
 
 # date picker for start date
 start_date = driver.find_element(By.XPATH, "//input[@id='datepicker1']")
-start_date.send_keys("20/10/2022")
+start_date.send_keys("30/12/2024")
 driver.implicitly_wait(1000)
 
 # date picker for end date
 end_date = driver.find_element(By.XPATH, "//input[@id='datepicker2']")
-end_date.send_keys("30/10/2022")
+end_date.send_keys("10/01/2025")
 driver.implicitly_wait(1000)
