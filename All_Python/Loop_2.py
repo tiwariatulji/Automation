@@ -100,5 +100,5 @@ for i in range(100):
 # 2.   Write a program to greet all the person names stored in a list ‘l’ and which starts with S.
 # l = ["Harry", "Soham", "Sachin", "Rahul"]     # 
 
-name = ["Harry", "Soham", "Sachin", "Rahul"]
-for i in
+# name = ["Harry", "Soham", "Sachin", "Rahul"]
+# for i in
