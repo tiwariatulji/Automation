@@ -1,34 +1,59 @@
-name: CI Pipeline with pytest
+name: CI CD pipeline
+run-name: Build, Deploy, Test - from user @${{ github.actor }}
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Unit Tests
+        run: |
+          pytest --maxfail=1 --disable-warnings -q
+
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ]  # Set to 'python' since we're focusing on Python
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
 
-    - name: Run pytest tests
-      run: |
-        pytest --maxfail=1 --disable-warnings -q
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:${{ matrix.language }}"
 
-    - name: Upload pytest results as artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: pytest-results
-        path: ./pytest-results/
+
+
         
