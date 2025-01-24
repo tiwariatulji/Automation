@@ -1,0 +1,33 @@
+name: CI Pipeline with pytest
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run pytest tests
+      run: |
+        pytest --maxfail=1 --disable-warnings -q
+
+    - name: Upload pytest results as artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: pytest-results
+        path: ./pytest-results/
