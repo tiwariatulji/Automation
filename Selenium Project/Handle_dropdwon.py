@@ -6,3 +6,4 @@ Options = Options()
 Options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=Options)
 driver.get("https://rahulshettyacademy.com/angularpractice/")
+pip

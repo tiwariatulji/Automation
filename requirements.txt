@@ -1,0 +1,16 @@
+allure-pytest         
+allure-python-commons 
+Appium-Python-Client  
+attrs                 
+certifi               
+cffi                  
+chardet               
+colorama              
+comtypes             
+execnet               
+h11                   
+idna                  
+iniconfig             
+lml                   
+numpy                 
+outcome              
