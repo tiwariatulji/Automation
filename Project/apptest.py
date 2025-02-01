@@ -6,3 +6,6 @@ def test_add_positive_number():
 def test_add_negative_number():
     result = add(-2, -3)
     assert result == -5
+
+
+# pytest .\Project\apptest.py        
