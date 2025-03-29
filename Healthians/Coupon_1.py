@@ -1,69 +1,71 @@
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# Replace with the actual path to your ChromeDriver executable
-driver = webdriver.Chrome()
+@pytest.fixture(scope="function")
+def driver():
+    # ब्राउज़र सेटअप
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    yield driver
+    # ब्राउज़र बंद करना
+    driver.quit()
 
-# Navigate to the URL of the page
-driver.get("")
+def test_create_coupon(driver):
+    # वेबसाइट पर जाएं
+    driver.get("https://www.healthians.com")
+    
+    # एलिमेंट्स के लिए प्रतीक्षा सेट करें
+    wait = WebDriverWait(driver, 10)
+    
+    # कैम्पेन चुनें
+    campaign_dropdown = wait.until(EC.presence_of_element_located((By.XPATH, "//select[@name='Select Campaign']")))
+    Select(campaign_dropdown).select_by_visible_text("Your Desired Campaign")
 
-# Select Campaign
-campaign_dropdown = Select(driver.find_element(By.XPATH, "//select[@name='Select Campaign']"))
-campaign_dropdown.select_by_visible_text("Your Desired Campaign")
+    # कूपन शुरू होने की तारीख
+    start_date = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='Coupon Start Date']")))
+    start_date.send_keys("2023-12-20")
 
-# No Of Frequency (if applicable)
-# frequency_dropdown = Select(driver.find_element(By.XPATH, "//select[@name='No Of Frequency']"))
-# frequency_dropdown.select_by_visible_text("Your Desired Frequency")
+    # कूपन समाप्ति तारीख
+    end_date = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='Coupon End Date']")))
+    end_date.send_keys("2023-12-30")
 
-# Coupon Start Date
-driver.find_element(By.XPATH, "//input[@name='Coupon Start Date']").send_keys("2023-12-20")
+    # सैंपल कलेक्शन शुरू होने की तारीख
+    sample_start = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='Sample Collection Start Date']")))
+    sample_start.send_keys("2023-12-21")
 
-# Coupon End Date
-driver.find_element(By.XPATH, "//input[@name='Coupon End Date']").send_keys("2023-12-30")
+    # सैंपल कलेक्शन समाप्ति तारीख
+    sample_end = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='Sample Collection End Date']")))
+    sample_end.send_keys("2023-12-31")
 
-# Sample Collection Start Date
-driver.find_element(By.XPATH, "//input[@name='Sample Collection Start Date']").send_keys("2023-12-21")
+    # छूट का प्रकार
+    discount_type = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@value='Fixed']")))
+    discount_type.click()
 
-# Sample Collection End Date
-driver.find_element(By.XPATH, "//input[@name='Sample Collection End Date']").send_keys("2023-12-31")
+    # क्या आप मल्टीपल स्लैब चाहते हैं?
+    multiple_slab = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='Do You Want For Multiple Slab' and @value='Yes']")))
+    multiple_slab.click()
 
-# Unique Coupon Code (if applicable)
-# unique_coupon_code_checkbox = driver.find_element(By.XPATH, "//input[@name='Unique Coupon Code']")
-# unique_coupon_code_checkbox.click()
+    # छूट की राशि
+    discount_amount = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='Discount Amount']")))
+    discount_amount.send_keys("100")
 
-# Discount Type
-discount_type_radio = driver.find_element(By.XPATH, "//input[@value='Fixed']")
-discount_type_radio.click()
+    # न्यूनतम बुकिंग मूल्य
+    min_booking = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='Min Booking Value']")))
+    min_booking.send_keys("500")
 
-# Do You Want For Multiple Slab?
-multiple_slab_checkbox = driver.find_element(By.XPATH, "//input[@name='Do You Want For Multiple Slab' and @value='Yes']")
-multiple_slab_checkbox.click()
+    # किस प्लेटफॉर्म पर इस कूपन का उपयोग करें?
+    platform_checkboxes = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//input[@name='Which Platform use this Coupon']")))
+    for checkbox in platform_checkboxes:
+        checkbox.click()
 
-# Discount Amount
-driver.find_element(By.XPATH, "//input[@name='Discount Amount']").send_keys("100")
+    # कूपन जोड़ें बटन
+    add_coupon_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Add Coupon']")))
+    add_coupon_button.click()
 
-# Min Booking Value
-driver.find_element(By.XPATH, "//input[@name='Min Booking Value']").send_keys("500")
-
-# Which Platform use this Coupon?
-platform_checkboxes = driver.find_elements(By.XPATH, "//input[@name='Which Platform use this Coupon']")
-for checkbox in platform_checkboxes:
-    checkbox.click()
-
-# Agent of which role can apply this coupon? (if applicable)
-# role_checkboxes = driver.find_elements(By.XPATH, "//input[@name='Agent of which role can apply this coupon']")
-# for checkbox in role_checkboxes:
-#     checkbox.click()
-
-# For what kind of users. This coupon is meant for? (if applicable)
-# user_checkboxes = driver.find_elements(By.XPATH, "//input[@name='For what kind of users. This coupon is meant for?']")
-# for checkbox in user_checkboxes:
-#     checkbox.click()
-
-# Add Coupon button (replace with actual button locator)
-add_coupon_button = driver.find_element(By.XPATH, "//button[text()='Add Coupon']")
-add_coupon_button.click()
-
-# Close the browser
-driver.quit()
+    # कूपन सफलतापूर्वक बनाया गया है या नहीं, इसकी जांच करें
+    # उदाहरण के लिए:
+    # assert "Coupon created successfully" in driver.page_source
